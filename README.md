@@ -25,3 +25,7 @@ Implementation of the project "weather" from Sergey Zhukov's roadmap
   - View (name, temperature)
   - Delete
  
+#### Used liteature
+- [Servlet Cookie](https://metanit.com/java/javaee/4.9.php)
+- [Servlet Exception](https://metanit.com/java/javaee/4.7.php)
+- 
