@@ -28,4 +28,6 @@ Implementation of the project "weather" from Sergey Zhukov's roadmap
 #### Used liteature
 - [Servlet Cookie](https://metanit.com/java/javaee/4.9.php)
 - [Servlet Exception](https://metanit.com/java/javaee/4.7.php)
+- [Hibernate Entity Foreign key example](https://examples.javacodegeeks.com/java-development/enterprise-java/hibernate/hibernate-foreign-key-example/)
+- [Hibernate and MariaDB](https://www.javaguides.net/2024/05/hibernate-mariadb-database-tutorial.html)
 - 
