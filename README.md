@@ -25,3 +25,13 @@ Implementation of the project "weather" from Sergey Zhukov's roadmap
   - View (name, temperature)
   - Delete
  
+#### Used liteature
+- [Servlet Cookie](https://metanit.com/java/javaee/4.9.php)
+- [Servlet Exception](https://metanit.com/java/javaee/4.7.php)
+- [Hibernate Entity Foreign key example](https://examples.javacodegeeks.com/java-development/enterprise-java/hibernate/hibernate-foreign-key-example/)
+- [Hibernate and MariaDB](https://www.javaguides.net/2024/05/hibernate-mariadb-database-tutorial.html)
+- [Java HttpClient](https://www.baeldung.com/java-httpclient-map-json-response)
+- [Парсинг JSON с помощью Jackson](https://habr.com/ru/companies/otus/articles/687004/)
+- [API Five Day Forecast](https://openweathermap.org/forecast5)
+- [API Current Day Weather](https://openweathermap.org/current#multi)
+  
