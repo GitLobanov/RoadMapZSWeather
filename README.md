@@ -25,6 +25,12 @@ Implementation of the project "weather" from Sergey Zhukov's roadmap
   - View (name, temperature)
   - Delete
  
+#### Steps to rune project
+
+Envirpement
+Vault
+Docker
+ 
 #### Used liteature
 - [Servlet Cookie](https://metanit.com/java/javaee/4.9.php)
 - [Servlet Exception](https://metanit.com/java/javaee/4.7.php)
@@ -34,4 +40,5 @@ Implementation of the project "weather" from Sergey Zhukov's roadmap
 - [Парсинг JSON с помощью Jackson](https://habr.com/ru/companies/otus/articles/687004/)
 - [API Five Day Forecast](https://openweathermap.org/forecast5)
 - [API Current Day Weather](https://openweathermap.org/current#multi)
+- [API Local Vault Storage](https://camelcodes.hashnode.dev/how-to-manage-java-application-secrets-using-vault)
   

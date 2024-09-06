@@ -1,6 +1,7 @@
 package main.com.weather.jg.service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import main.com.weather.jg.keystores.ExternalApi;
 import main.com.weather.jg.model.FiveDayForecastApi;
 
 import java.io.IOException;
@@ -12,11 +13,14 @@ import java.net.http.HttpResponse;
 
 public class FiveDayForecastService {
 
-    private static String API = "&appid=ae92c5ab6534cc98bc90100a213832ac";
+    private static String API;
     private static String UNITS = "&units=metric";
     private static String LANG = "&lang=ru";
     private static String URL = "http://api.openweathermap.org/data/2.5/forecast?q=";
 
+    public FiveDayForecastService () {
+        API = "&appid=" + ExternalApi.getExternalApiKey();
+    }
 
     public FiveDayForecastApi getByCity (String city) {
         HttpRequest request = null;
