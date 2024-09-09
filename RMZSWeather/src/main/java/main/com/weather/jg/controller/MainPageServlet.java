@@ -5,7 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import main.com.weather.jg.model.CurrentWeatherApi;
+import main.com.weather.jg.dto.LocationDto;
 import main.com.weather.jg.model.Location;
 import main.com.weather.jg.model.User;
 import main.com.weather.jg.service.CurrentWeatherService;
@@ -15,7 +15,7 @@ import org.hibernate.exception.ConstraintViolationException;
 import java.io.IOException;
 import java.math.BigDecimal;
 
-@WebServlet(name = "MainPageServlet", urlPatterns = "/")
+@WebServlet(name = "MainPageServlet", urlPatterns = {"/","/main"})
 public class MainPageServlet extends HttpServlet {
 
     CurrentWeatherService currentWeatherService;
@@ -32,9 +32,16 @@ public class MainPageServlet extends HttpServlet {
 
         if (req.getSession().getAttribute("user")==null) {
             resp.sendRedirect("/weather/auth");
-        } else{
-            req.getRequestDispatcher("index.jsp").forward(req, resp);
+            return;
         }
+
+        String city = req.getParameter("city");
+        if (city!=null){
+            LocationDto locationDto = currentWeatherService.getByCity(city);
+            req.getSession().setAttribute("locationDto", locationDto);
+        }
+
+        req.getRequestDispatcher("index.jsp").forward(req, resp);
 
     }
 
@@ -42,18 +49,11 @@ public class MainPageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String city = req.getParameter("city");
-        String lon = req.getParameter("lon");
-        String lat = req.getParameter("lat");
-
-
-        CurrentWeatherApi currentWeatherApi = currentWeatherService.getByCity(city);
         User user = (User) req.getSession().getAttribute("user");
 
-        if (lon !=null && lat !=null && city != null) {
+        if (city != null) {
             Location location = new Location();
             location.setName(city);
-            location.setLatitude(new BigDecimal(lat));
-            location.setLongitude(new BigDecimal(lon));
             location.setUserFK(user);
 
             try {
@@ -64,15 +64,6 @@ public class MainPageServlet extends HttpServlet {
 
         }
 
-
-        if (currentWeatherApi==null) {
-
-        } else {
-            currentWeatherApi.setAdded(locationService.isHaveByCityAndUser(currentWeatherApi.getName(),user));
-        }
-
-
-        req.getSession().setAttribute("currentWeatherApi", currentWeatherApi);
         resp.sendRedirect("/weather/");
     }
 }

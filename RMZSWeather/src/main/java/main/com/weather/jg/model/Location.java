@@ -15,8 +15,6 @@ public class Location {
     @ManyToOne
     private User userFK;
     private String name;
-    private BigDecimal latitude;
-    private BigDecimal longitude;
 
 
 }

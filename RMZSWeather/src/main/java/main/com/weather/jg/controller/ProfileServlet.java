@@ -5,7 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import main.com.weather.jg.model.CurrentWeatherApi;
+import main.com.weather.jg.dto.LocationDto;
 import main.com.weather.jg.model.Location;
 import main.com.weather.jg.service.CurrentWeatherService;
 import main.com.weather.jg.service.LocationService;
@@ -32,20 +32,23 @@ public class ProfileServlet extends HttpServlet {
 
 
         List<Location> locations = locationService.findAllLocations();
-        List<CurrentWeatherApi> weatherApiList = new ArrayList<>();
+        List<LocationDto> locationDtos = new ArrayList<>();
 
         Iterator<Location> iterator = locations.iterator();
 
-        while (iterator.hasNext()) {
-            Location location = iterator.next();
-            CurrentWeatherApi currentWeatherApi = currentWeatherService.getByCity(location.getName());
-            weatherApiList.add(currentWeatherApi);
+        try {
+            while (iterator.hasNext()) {
+                Location location = iterator.next();
+                LocationDto locationDto = currentWeatherService.getByCity(location.getName());
+                locationDtos.add(locationDto);
+            }
+        } catch (Exception e){
+            req.setAttribute("error", e.getMessage());
         }
 
-        if (weatherApiList.isEmpty()) {
 
-        } else {
-            req.getSession().setAttribute("weatherApiList", weatherApiList);
+        if (!locationDtos.isEmpty()) {
+            req.setAttribute("locationDtos", locationDtos);
         }
 
         req.getRequestDispatcher("profile.jsp").forward(req, resp);

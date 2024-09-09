@@ -1,41 +1,36 @@
 <%@ page import="main.com.weather.jg.service.AuthenticationService" %>
 <%@ page import="main.com.weather.jg.model.User" %>
-<%@ page import="main.com.weather.jg.model.CurrentWeatherApi" %>
 <%@ page import="main.com.weather.jg.service.LocationService" %>
+<%@ page import="main.com.weather.jg.dto.LocationDto" %>
 
 <%
 
-    AuthenticationService authenticationService = new AuthenticationService();
-    User user = (User) session.getAttribute("user");
-
-    CurrentWeatherApi currentWeatherApi = null;
-    if (session.getAttribute("currentWeatherApi")!=null) {
-        currentWeatherApi = (CurrentWeatherApi) session.getAttribute("currentWeatherApi");
-    }
-
+    LocationDto locationDto = null;
 
 %>
 
 <jsp:include page="fragments/header.jsp"/>
 
 <main>
-    <form action="" method="post" class="search-container">
+    <form action="" method="get" class="search-container">
         <input type="text" name="city" placeholder="Поиск города..." id="search">
         <input class="button-arounder" type="submit" value="Найти">
     </form>
     <div class="location-list">
         <%
-            if (currentWeatherApi!=null) {
+            if (session.getAttribute("locationDto")!=null) {
+                locationDto = (LocationDto) session.getAttribute("locationDto");
+                if (locationDto==null) {
+                    return;
+                }
                 %>
                     <div class="weather-info">
-                            <h2>Город: <%= currentWeatherApi.getName() %></h2>
-                            <p>Погода: <%= currentWeatherApi.getMain().getTemp() + ", " + currentWeatherApi.getWeather()[0].getDescription()%></p>
-                            <p>Широта: <%= currentWeatherApi.getCoord().getLat() %>° N</p>
-                            <p>Долгота: <%= currentWeatherApi.getCoord().getLon() %>° E</p>
+                            <h2>Город: <%= locationDto.getAddress() %></h2>
+                            <p>Погода: <%= locationDto.getDays()[0].getTemp() + "°C, " + locationDto.getDays()[0].getConditions()%></p>
                         <%
-                            if (!currentWeatherApi.isAdded()) {
+                            if (!locationDto.isAdded()) {
                                 %>
-                                    <form method="post" action="?lon=<%=currentWeatherApi.getCoord().getLon()%>&lat=<%=currentWeatherApi.getCoord().getLat()%>&city=<%=currentWeatherApi.getName()%>">
+                                    <form method="post" action="?city=<%=locationDto.getAddress()%>">
                                         <input class="button-arounder" value="Добавить" type="submit">
                                     </form>
                                 <%
@@ -54,7 +49,9 @@
     </div>
 </main>
 <footer>
-    <p>&copy; 2023 Погода в городах</p>
+    <div class="wrapper">
+        <div class="content"> 2023 Погода в городах </div>
+    </div>
 </footer>
 </body>
 </html>

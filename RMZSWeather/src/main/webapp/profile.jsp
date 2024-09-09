@@ -1,20 +1,12 @@
-<%@ page import="main.com.weather.jg.service.AuthenticationService" %>
 <%@ page import="main.com.weather.jg.model.User" %>
 <%@ page import="main.com.weather.jg.model.CurrentWeatherApi" %>
-<%@ page import="main.com.weather.jg.service.LocationService" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.Iterator" %>
+<%@ page import="main.com.weather.jg.dto.LocationDto" %>
 
 <%
 
-    AuthenticationService authenticationService = new AuthenticationService();
     User user = (User) session.getAttribute("user");
-
-    List<CurrentWeatherApi> weatherApiList = null;
-    if (session.getAttribute("currentWeatherApi")!=null) {
-        weatherApiList = (List<CurrentWeatherApi>) session.getAttribute("weatherApiList");
-    }
-
 
 %>
 
@@ -26,19 +18,20 @@
         <input type="submit" value="Найти">
     </form>
     <div class="location-list">
-        <% if (weatherApiList!=null) {
-            Iterator iterator = weatherApiList.iterator();
+        <%  List<LocationDto> locationDtos = null;
+            if (request.getAttribute("locationDtos") != null) {
+                locationDtos = (List<LocationDto>) session.getAttribute("locationDtos");
+            if (locationDtos == null) return;
+            Iterator iterator = locationDtos.iterator();
             while (iterator.hasNext()) {
-                CurrentWeatherApi currentWeatherApi = (CurrentWeatherApi) iterator.next();
+                LocationDto locationDto = (LocationDto) iterator.next();
                 %>
                 <div class="weather-info">
-                    <h2>Город: <%= currentWeatherApi.getName() %></h2>
-                    <p>Погода: <%= currentWeatherApi.getMain().getTemp() + ", " + currentWeatherApi.getWeather()[0].getDescription()%></p>
-                    <p>Широта: <%= currentWeatherApi.getCoord().getLat() %>° N</p>
-                    <p>Долгота: <%= currentWeatherApi.getCoord().getLon() %>° E</p>
+                    <h2>Город: <%= locationDto.getAddress() %></h2>
+                    <p>Погода: <%= locationDto.getDays()[0].getTemp() + "°C, " + locationDto.getDays()[0].getConditions()%></p>
 
                     <form method="get" action="fiveday">
-                        <input style="position: absolute;visibility: hidden;" name="city" value="<%= currentWeatherApi.getName()%>">
+                        <input style="position: absolute;visibility: hidden;" name="city" value="<%= locationDto.getAddress()%>">
                         <input class="button-arounder" value="Подробнее" type="submit">
                     </form>
                 </div>
@@ -48,6 +41,18 @@
         %>
 
     </div>
+
+    <%-- notify handler  --%>
+
+    <%
+        if (request.getAttribute("error") != null) {
+            %>
+                <jsp:include page="notification/error_notify.jsp"/>
+            <%
+        }
+    %>
+
+
 </main>
 <footer>
     <p>&copy; 2023 Погода в городах</p>
