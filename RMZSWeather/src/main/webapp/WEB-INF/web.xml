@@ -23,6 +23,8 @@
   <servlet-mapping>
     <servlet-name>default</servlet-name>
     <url-pattern>/css/*</url-pattern>
+    <url-pattern>/weather-icon/*</url-pattern>
   </servlet-mapping>
-  
+
+
 </web-app>

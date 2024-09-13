@@ -7,7 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import main.com.weather.jg.dto.LocationDto;
 import main.com.weather.jg.model.Location;
-import main.com.weather.jg.service.CurrentWeatherService;
+import main.com.weather.jg.service.WeatherApiService;
 import main.com.weather.jg.service.LocationService;
 
 import java.io.IOException;
@@ -18,12 +18,12 @@ import java.util.List;
 @WebServlet(name = "ProfileServlet", urlPatterns = "/profile")
 public class ProfileServlet extends HttpServlet {
 
-    CurrentWeatherService currentWeatherService;
+    WeatherApiService weatherApiService;
     LocationService locationService;
 
     @Override
     public void init() throws ServletException {
-        currentWeatherService = new CurrentWeatherService();
+        weatherApiService = new WeatherApiService();
         locationService = new LocationService();
     }
 
@@ -39,7 +39,7 @@ public class ProfileServlet extends HttpServlet {
         try {
             while (iterator.hasNext()) {
                 Location location = iterator.next();
-                LocationDto locationDto = currentWeatherService.getByCity(location.getName());
+                LocationDto locationDto = weatherApiService.getWeatherCurrentDayByCity(location.getName());
                 locationDtos.add(locationDto);
             }
         } catch (Exception e){

@@ -25,8 +25,8 @@
                 }
                 %>
                     <div class="weather-info">
-                            <h2>Город: <%= locationDto.getAddress() %></h2>
-                            <p>Погода: <%= locationDto.getDays()[0].getTemp() + "°C, " + locationDto.getDays()[0].getConditions()%></p>
+                            <h2><%= locationDto.getAddress() %></h2>
+                            <p><%= locationDto.getDays().get(0).getTemp() + "°C, " + locationDto.getDays().get(0).getConditions()%></p>
                         <%
                             if (!locationDto.isAdded()) {
                                 %>

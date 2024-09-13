@@ -8,22 +8,21 @@ import jakarta.servlet.http.HttpServletResponse;
 import main.com.weather.jg.dto.LocationDto;
 import main.com.weather.jg.model.Location;
 import main.com.weather.jg.model.User;
-import main.com.weather.jg.service.CurrentWeatherService;
+import main.com.weather.jg.service.WeatherApiService;
 import main.com.weather.jg.service.LocationService;
 import org.hibernate.exception.ConstraintViolationException;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 
 @WebServlet(name = "MainPageServlet", urlPatterns = {"/","/main"})
 public class MainPageServlet extends HttpServlet {
 
-    CurrentWeatherService currentWeatherService;
+    WeatherApiService weatherApiService;
     LocationService locationService;
 
     @Override
     public void init() throws ServletException {
-        currentWeatherService = new CurrentWeatherService();
+        weatherApiService = new WeatherApiService();
         locationService = new LocationService();
     }
 
@@ -37,7 +36,7 @@ public class MainPageServlet extends HttpServlet {
 
         String city = req.getParameter("city");
         if (city!=null){
-            LocationDto locationDto = currentWeatherService.getByCity(city);
+            LocationDto locationDto = weatherApiService.getWeatherCurrentDayByCity(city);
             req.getSession().setAttribute("locationDto", locationDto);
         }
 

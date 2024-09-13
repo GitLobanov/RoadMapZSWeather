@@ -5,21 +5,21 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import main.com.weather.jg.model.FiveDayForecastApi;
-import main.com.weather.jg.service.FiveDayForecastService;
+import main.com.weather.jg.dto.LocationDto;
 import main.com.weather.jg.service.LocationService;
+import main.com.weather.jg.service.WeatherApiService;
 
 import java.io.IOException;
 
 @WebServlet(name = "FiveDayWeatherServlet", urlPatterns = {"/fiveday"})
-public class FiveDayForecastServlet extends HttpServlet {
+public class DetailedWeatherServlet extends HttpServlet {
 
-    private FiveDayForecastService fiveDayForecastService;
+    private WeatherApiService weatherApiService;
     private LocationService locationService;
 
     @Override
     public void init() throws ServletException {
-        fiveDayForecastService = new FiveDayForecastService();
+        weatherApiService = new WeatherApiService();
         locationService = new LocationService();
     }
 
@@ -32,10 +32,10 @@ public class FiveDayForecastServlet extends HttpServlet {
             resp.sendRedirect("profile");
         } else {
 
-            FiveDayForecastApi fiveDayForecast = fiveDayForecastService.getByCity(city);
-            req.getSession().setAttribute("fiveDayForecast", fiveDayForecast);
+            LocationDto locationDto = weatherApiService.getWeatherWeekByCity(city);
+            req.setAttribute("locationDto", locationDto);
 
-            req.getRequestDispatcher("fiveday.jsp").forward(req, resp);
+            req.getRequestDispatcher("city_detailed_weather.jsp").forward(req, resp);
         }
 
     }

@@ -3,12 +3,14 @@ package main.com.weather.jg.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LocationDto {
 
     private String address;
-    private Days[] days;
+    private List<Days> days;
 
     @Data
     @JsonIgnoreProperties(ignoreUnknown = true)
@@ -22,7 +24,7 @@ public class LocationDto {
         String conditions;
         String icon;
 
-        Hours[] hours;
+        List<Hours> hours;
 
         @Data
         @JsonIgnoreProperties(ignoreUnknown = true)
