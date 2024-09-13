@@ -38,6 +38,6 @@ Docker
 - [Hibernate and MariaDB](https://www.javaguides.net/2024/05/hibernate-mariadb-database-tutorial.html)
 - [Java HttpClient](https://www.baeldung.com/java-httpclient-map-json-response)
 - [Парсинг JSON с помощью Jackson](https://habr.com/ru/companies/otus/articles/687004/)
-- [API Weather Service][(https://openweathermap.org/forecast5](https://www.visualcrossing.com/resources/documentation/weather-api/timeline-weather-api/))
+- [API Weather Service](https://www.visualcrossing.com/resources/documentation/weather-api/timeline-weather-api/)
 - [API Local Vault Storage](https://camelcodes.hashnode.dev/how-to-manage-java-application-secrets-using-vault)
   
